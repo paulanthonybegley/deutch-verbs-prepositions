@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modul 4: für · um · gegen + Akkusativ – Verben mit Präpositionen</title>
+<style>* { margin:0; padding:0; box-sizing:border-box; }
+:root { --red:#b3121b; --red-dark:#7c0a12; --gold:#d4af37; --black:#1a1a1a; --grey:#6b6b6b; --cream:#faf7f2; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--cream); color:var(--black); line-height:1.6; }
+.topbar { background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%); color:#fff; padding:.9rem 1.2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.5rem; }
+.topbar a { color:#ffe9e9; text-decoration:none; font-weight:600; font-size:.9rem; }
+.topbar .title { font-weight:700; font-size:1.05rem; }
+header.hdr { background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%); color:#fff; padding:1.6rem 1.2rem; text-align:center; }
+header.hdr h1 { font-size:clamp(1.4rem,3vw,2.1rem); }
+header.hdr p { opacity:.9; }
+.container { max-width:860px; margin:0 auto; padding:1.4rem 1.2rem 3rem; }
+.tabs { display:flex; gap:.6rem; flex-wrap:wrap; margin-bottom:1.4rem; }
+.tabbtn { border:2px solid var(--red); background:#fff; color:var(--red); padding:.55rem 1rem; border-radius:8px; font-weight:600; cursor:pointer; font-size:.9rem; transition:all .18s; }
+.tabbtn.active { background:var(--red); color:#fff; }
+.panel { display:none; }
+.panel.active { display:block; }
+.panel h2 { color:var(--red); margin-bottom:.6rem; font-size:1.3rem; }
+.panel p.lede { color:var(--grey); margin-bottom:1rem; font-size:.95rem; }
+.speak { color:var(--red); text-decoration:underline dotted; cursor:pointer; }
+.progressbox { background:#fff; border-radius:10px; padding:.9rem 1.2rem; box-shadow:0 2px 6px rgba(0,0,0,.08); margin-bottom:1rem; display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+.progressbox .bar { flex:1; height:10px; background:#e7e2da; border-radius:6px; overflow:hidden; min-width:120px; }
+.progressbox .bar .fill { height:100%; background:linear-gradient(90deg,var(--red),#e0555d); transition:width .3s; }
+.btn { display:inline-block; background:var(--red); color:#fff; padding:.55rem 1.1rem; border-radius:8px; border:none; font-weight:600; font-size:.9rem; cursor:pointer; transition:background .18s; }
+.btn:hover { background:var(--red-dark); }
+.btn.gold { background:var(--gold); color:#1a1a1a; }
+.btn.ghost { background:#fff; color:var(--red); border:2px solid var(--red); }
+.qcard { background:#fff; border-radius:12px; padding:1.3rem 1.5rem; box-shadow:0 2px 8px rgba(0,0,0,.1); margin-bottom:1rem; }
+.qcard .q { font-size:1.12rem; margin-bottom:.8rem; }
+.qcard .q .german { font-weight:700; color:var(--red); }
+.opts { display:grid; gap:.6rem; }
+.opt { border:2px solid #ddd; background:#fff; padding:.7rem 1rem; border-radius:8px; cursor:pointer; font-size:.96rem; transition:all .15s; text-align:left; }
+.opt:hover { border-color:var(--red); }
+.opt.correct { background:#e9f7ec; border-color:#2e9e4f; }
+.opt.wrong { background:#fdecec; border-color:#c0392b; }
+.reveal { background:#fbf3e4; border:1px solid #e2c98a; border-radius:10px; padding:1rem 1.2rem; margin:.8rem 0 0; font-size:.96rem; }
+.reveal .g { font-weight:700; color:var(--red); font-size:1.05rem; }
+.reveal .en { color:var(--grey); }
+.gramtag { display:inline-block; background:#f3ede1; color:#7a5b1e; border:1px solid #e2c98a; border-radius:20px; padding:.15rem .7rem; font-size:.8rem; margin:.15rem .2rem .15rem 0; }
+.navbtns { display:flex; gap:.7rem; margin-top:1rem; flex-wrap:wrap; }
+.flipcard { perspective:1000px; cursor:pointer; }
+.flipcard .inner { position:relative; width:100%; min-height:220px; transition:transform .5s; transform-style:preserve-3d; }
+.flipcard.flipped .inner { transform:rotateY(180deg); }
+.face { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:14px; padding:1.4rem; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; box-shadow:0 4px 14px rgba(0,0,0,.12); }
+.face.front { background:#fff; border:2px solid var(--red); }
+.face.front .verb { font-size:1.8rem; font-weight:800; color:var(--red); }
+.face.front .hint { color:var(--grey); margin-top:.5rem; font-size:.95rem; }
+.face.back { background:var(--red); color:#fff; transform:rotateY(180deg); }
+.face.back .en { font-size:1.3rem; font-weight:700; margin-bottom:.6rem; }
+.face.back .sent { opacity:.92; }
+.empty-note { color:var(--grey); font-size:.9rem; margin-top:.4rem; }
+.feedback { font-weight:700; margin-top:.6rem; }
+.feedback.ok { color:#2e9e4f; }
+.feedback.no { color:#c0392b; }
+.feedback.sol { color:var(--grey); font-size:.9rem; font-weight:500; margin-top:.3rem; }
+.speak.inline { font-size:.85rem; margin-left:.4rem; }
+.qtype { font-size:.85rem; color:var(--grey); margin-bottom:.5rem; }
+.qtype-tag { display:inline-block; background:var(--red); color:#fff; border-radius:20px; padding:.12rem .75rem; font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.4px; vertical-align:middle; }
+.qcard.results { text-align:center; border-top:5px solid var(--gold); }
+.qcard.results h3 { color:var(--red); margin-bottom:.4rem; font-size:1.4rem; }
+.qcard.results .bigscore { font-size:1.15rem; margin:.6rem 0 1rem; }
+.qcard.results .navbtns { justify-content:center; }
+@media (max-width:560px){ .flipcard .inner { min-height:190px; } .face.front .verb { font-size:1.4rem; } }.face.front .prompt { color:var(--gold); font-weight:700; font-size:.85rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:.4rem; }
+.face.front .en { color:var(--grey); margin-top:.4rem; font-size:.95rem; }
+.face.back .prep { font-size:1.15rem; font-weight:700; margin-bottom:.5rem; }
+.face.back .meaning { opacity:.92; font-size:.9rem; margin-bottom:.5rem; }
+</style>
+</head>
+<body>
+<div class="topbar"><a href="../index.html">← Kursübersicht</a><span class="title">⚔️ Modul 4: für · um · gegen + Akkusativ</span><span>🔊 de-DE</span></div>
+<header class="hdr"><h1>⚔️ für · um · gegen + Akkusativ</h1><p>Verbs with für, um, gegen · 20 Verben · B1–C1</p></header>
+<div class="container">
+  <div class="progressbox">
+    <span>Fortschritt</span>
+    <div class="bar"><div class="fill" id="progFill" style="width:0%"></div></div>
+    <span id="progPct">0%</span>
+    <button class="btn ghost" onclick="resetProg()">Zurücksetzen</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tabbtn active" data-tab="study">📚 Lernen</button>
+    <button class="tabbtn" data-tab="drill">🃏 Karten</button>
+    <button class="tabbtn" data-tab="fill">✍️ Lücken</button>
+    <button class="tabbtn" data-tab="quiz">🎯 Quiz</button>
+  </div>
+
+  <section class="panel active" id="panel-study">
+    <h2>Lernen</h2>
+    <p class="lede">Arbeite die 20 Verben mit Präposition dieser Kategorie durch. Klicke ein deutsches Wort, um es zu hören. Der erste grüne Tag zeigt immer die feste Präposition und den Kasus.</p>
+    <div id="studyList"></div>
+  </section>
+
+  <section class="panel" id="panel-drill">
+    <h2>Karten</h2>
+    <p class="lede">Sieh das deutsche Verb und überlege, welche Präposition und welcher Kasus dazugehören. Dreh die Karte um, um die Lösung zu sehen.</p>
+    <div class="progressbox"><span>Karte</span><span id="drillPos">1 / 20</span><div class="bar"><div class="fill" id="drillFill" style="width:0%"></div></div></div>
+    <div class="flipcard" id="flipcard" onclick="flip()">
+      <div class="inner">
+        <div class="face front">
+          <div class="prompt">Welche Präposition?</div>
+          <div class="verb" id="drillVerb"></div>
+          <div class="en" id="drillEn"></div>
+          <div class="hint">Klicke für die Auflösung</div>
+        </div>
+        <div class="face back">
+          <div class="prep" id="drillPrep"></div>
+          <div class="sent" id="drillSent"></div>
+        </div>
+      </div>
+    </div>
+    <div class="navbtns">
+      <button class="btn ghost" onclick="drillPrev()">← Zurück</button>
+      <button class="btn" onclick="drillNext()">Weiter →</button>
+    </div>
+    <p class="empty-note">Karten durchlaufen die Verben in zufälliger Reihenfolge.</p>
+  </section>
+
+  <section class="panel" id="panel-fill">
+    <h2>Lücken füllen</h2>
+    <p class="lede">Vervollständige den Satz mit der passenden Präposition. Wähle die richtige Präposition und klicke auf „Weiter“.</p>
+    <div class="progressbox"><span>Frage</span><span id="fillPos">1 / 10</span><div class="bar"><div class="fill" id="fillFill" style="width:0%"></div></div><span>Punkte</span><span id="fillScore">0 / 0</span></div>
+    <div id="fillQ"></div>
+    <div class="navbtns"><button class="btn ghost" onclick="fillReset()">Neu mischen</button></div>
+    <p class="empty-note">10 zufällige Sätze aus dieser Kategorie. Die richtige Präposition wird automatisch erkannt.</p>
+  </section>
+
+  <section class="panel" id="panel-quiz">
+    <h2>Quiz</h2>
+    <p class="lede">10 gemischte Fragetypen: Präposition, Kasus, Übersetzung und Verbwahl. Jede Frage ist oben beschriftet – antworte und klicke auf „Weiter“.</p>
+    <div class="progressbox"><span>Frage</span><span id="quizPos">1 / 10</span><div class="bar"><div class="fill" id="quizFill" style="width:0%"></div></div><span>Punkte</span><span id="quizScore">0 / 0</span></div>
+    <div id="quizQ"></div>
+    <div class="navbtns"><button class="btn ghost" onclick="quizReset()">Neu mischen</button></div>
+    <p class="empty-note">10 Fragen, gemischt aus allen 20 Verben mit Präposition dieser Kategorie.</p>
+  </section>
+</div>
+<footer style="text-align:center;padding:1.6rem;color:var(--grey);font-size:.88rem">
+  <p>Modul 4 von 7 · Basierend auf „Deutsch lernen B1–C1: 2.000 Sätze mit Verben + Präpositionen | Shadowing“ (Einfach deutsch, easy deutsch.) · <a href="../index.html" style="color:var(--red)">Kursübersicht</a></p>
+</footer>
+<script>
+const VERBS = [{"v": "sich interessieren für", "verb": "sich interessieren", "prep": "für", "case": "Akkusativ", "en": "to be interested in", "meaning": "sich für etwas interessieren: mehr darüber wissen wollen.", "example": "Ich interessiere mich sehr für Sprachen.", "natural": "Interessierst du dich für Sport?", "grammar": "für + Akkusativ · reflexiv"}, {"v": "sich entscheiden für", "verb": "sich entscheiden", "prep": "für", "case": "Akkusativ", "en": "to decide on", "meaning": "sich für etwas entscheiden: eine Wahl treffen.", "example": "Ich habe mich für das blaue Auto entschieden.", "natural": "Wofür hast du dich am Ende entschieden?", "grammar": "für + Akkusativ · reflexiv · starkes Verb"}, {"v": "danken für", "verb": "danken", "prep": "für", "case": "Akkusativ", "en": "to thank for", "meaning": "jemandem für etwas danken: seinen Dank aussprechen.", "example": "Ich danke dir für deine große Hilfe.", "natural": "Wir danken euch für die schönen Geschenke.", "grammar": "für + Akkusativ"}, {"v": "sorgen für", "verb": "sorgen", "prep": "für", "case": "Akkusativ", "en": "to take care of", "meaning": "für etwas sorgen: sich darum kümmern, dass es gut läuft.", "example": "Ich sorge heute für das Abendessen.", "natural": "Wer sorgt für die Kinder, wenn wir weg sind?", "grammar": "für + Akkusativ"}, {"v": "kämpfen für", "verb": "kämpfen", "prep": "für", "case": "Akkusativ", "en": "to fight for", "meaning": "für etwas kämpfen: sich für eine Sache einsetzen.", "example": "Sie kämpfen für ihre Rechte.", "natural": "Wir kämpfen für mehr Gerechtigkeit.", "grammar": "für + Akkusativ"}, {"v": "sich bedanken für", "verb": "sich bedanken", "prep": "für", "case": "Akkusativ", "en": "to thank for", "meaning": "sich für etwas bedanken: Dank sagen.", "example": "Ich bedanke mich herzlich für die Einladung.", "natural": "Sie hat sich für das Geschenk bedankt.", "grammar": "für + Akkusativ · reflexiv"}, {"v": "sich eignen für", "verb": "sich eignen", "prep": "für", "case": "Akkusativ", "en": "to be suitable for", "meaning": "sich für etwas eignen: dafür passend sein.", "example": "Dieses Buch eignet sich für Anfänger.", "natural": "Er eignet sich nicht für diese Aufgabe.", "grammar": "für + Akkusativ · reflexiv"}, {"v": "halten für", "verb": "halten", "prep": "für", "case": "Akkusativ", "en": "to consider / take for", "meaning": "jemanden für etwas halten: eine bestimmte Meinung über ihn haben.", "example": "Ich halte ihn für einen guten Lehrer.", "natural": "Wofür hältst du mich eigentlich?", "grammar": "für + Akkusativ · starkes Verb"}, {"v": "sich entschuldigen für", "verb": "sich entschuldigen", "prep": "für", "case": "Akkusativ", "en": "to apologize for", "meaning": "sich für etwas entschuldigen: um Verzeihung bitten.", "example": "Ich entschuldige mich für die Verspätung.", "natural": "Er hat sich für seinen Fehler entschuldigt.", "grammar": "für + Akkusativ · reflexiv"}, {"v": "werben für", "verb": "werben", "prep": "für", "case": "Akkusativ", "en": "to advertise for", "meaning": "für etwas werben: Werbung dafür machen.", "example": "Die Firma wirbt für ihr neues Produkt.", "natural": "Wir werben für mehr Klimaschutz.", "grammar": "für + Akkusativ · starkes Verb"}, {"v": "sich begeistern für", "verb": "sich begeistern", "prep": "für", "case": "Akkusativ", "en": "to be enthusiastic about", "meaning": "sich für etwas begeistern: volle Freude und Interesse dafür haben.", "example": "Sie begeistert sich für klassische Musik.", "natural": "Ich kann mich dafür einfach nicht begeistern.", "grammar": "für + Akkusativ · reflexiv"}, {"v": "bitten um", "verb": "bitten", "prep": "um", "case": "Akkusativ", "en": "to ask for", "meaning": "um etwas bitten: höflich um etwas ersuchen.", "example": "Er bittet die Kollegen um Hilfe.", "natural": "Ich bitte dich um ein wenig Geduld.", "grammar": "um + Akkusativ · starkes Verb"}, {"v": "sich kümmern um", "verb": "sich kümmern", "prep": "um", "case": "Akkusativ", "en": "to take care of", "meaning": "sich um etwas kümmern: die Verantwortung dafür übernehmen.", "example": "Sie kümmert sich rührend um ihre Großmutter.", "natural": "Kümmerst du dich um die Tickets?", "grammar": "um + Akkusativ · reflexiv"}, {"v": "sich bemühen um", "verb": "sich bemühen", "prep": "um", "case": "Akkusativ", "en": "to strive for", "meaning": "sich um etwas bemühen: sich dafür anstrengen.", "example": "Er bemüht sich um eine bessere Note.", "natural": "Wir bemühen uns sehr um Ihr Verständnis.", "grammar": "um + Akkusativ · reflexiv"}, {"v": "sich sorgen um", "verb": "sich sorgen", "prep": "um", "case": "Akkusativ", "en": "to worry about", "meaning": "sich um jemanden sorgen: besorgt um ihn sein.", "example": "Ich sorge mich um deine Gesundheit.", "natural": "Sie macht sich große Sorgen um ihren Sohn.", "grammar": "um + Akkusativ · reflexiv"}, {"v": "sich handeln um", "verb": "sich handeln", "prep": "um", "case": "Akkusativ", "en": "to be about", "meaning": "es handelt sich um etwas: es geht um etwas Bestimmtes.", "example": "Es handelt sich offenbar um einen Irrtum.", "natural": "Worum handelt es sich denn genau?", "grammar": "um + Akkusativ · reflexiv"}, {"v": "sich bewerben um", "verb": "sich bewerben", "prep": "um", "case": "Akkusativ", "en": "to apply for", "meaning": "sich um etwas bewerben: sich für eine Stelle oder ein Stipendium bewerben.", "example": "Er bewirbt sich um eine neue Stelle.", "natural": "Sie hat sich um ein Stipendium beworben.", "grammar": "um + Akkusativ · reflexiv · starkes Verb"}, {"v": "streiten um", "verb": "streiten", "prep": "um", "case": "Akkusativ", "en": "to argue about", "meaning": "um etwas streiten: sich wegen einer Sache heftig auseinandersetzen.", "example": "Die Kinder streiten sich um das Spielzeug.", "natural": "Die Erben streiten um das ganze Vermögen.", "grammar": "um + Akkusativ · starkes Verb"}, {"v": "protestieren gegen", "verb": "protestieren", "prep": "gegen", "case": "Akkusativ", "en": "to protest against", "meaning": "gegen etwas protestieren: öffentlich Widerstand zeigen.", "example": "Viele Bürger protestieren gegen die neue Regel.", "natural": "Sie protestieren lautstark gegen die Umweltverschmutzung.", "grammar": "gegen + Akkusativ"}, {"v": "sich wehren gegen", "verb": "sich wehren", "prep": "gegen", "case": "Akkusativ", "en": "to defend oneself against", "meaning": "sich gegen etwas wehren: Widerstand leisten und sich verteidigen.", "example": "Er wehrt sich gegen die ungerechten Vorwürfe.", "natural": "Sie wehrt sich gegen den ständigen Lärm.", "grammar": "gegen + Akkusativ · reflexiv"}];
+const CATID = 4;
+// =============================================================
+//  Verben mit Präpositionen - module app logic
+//  Expects VERBS (array) and CATID (int) defined before this file.
+// =============================================================
+const N = VERBS.length;
+const KEY = 'dvp-progress-' + CATID;
+
+const TTS = (() => {
+  const u = ('speechSynthesis' in window) ? window.speechSynthesis : null;
+  let voice = null;
+  if (u) {
+    const pick = () => {
+      const vs = u.getVoices();
+      voice = vs.find(v => v.lang === 'de-DE') || vs.find(v => v.lang && v.lang.slice(0, 2) === 'de') || null;
+    };
+    pick();
+    u.onvoiceschanged = pick;
+  }
+  return {
+    ok: !!u,
+    speak(t) {
+      if (!u) return;
+      u.cancel();
+      const x = new SpeechSynthesisUtterance(t);
+      x.lang = 'de-DE';
+      x.rate = 0.92;
+      if (voice) x.voice = voice;
+      u.speak(x);
+    }
+  };
+})();
+
+window.speak = function (t) { TTS.speak(t); };
+
+function escHtml(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function q(tag, attrs, html) {
+  const el = document.createElement(tag);
+  for (const k in attrs) el.setAttribute(k, attrs[k]);
+  if (html != null) el.innerHTML = html;
+  return el;
+}
+
+// ---------- progress ----------
+function setProg(p) {
+  p = Math.max(0, Math.min(100, Math.round(p)));
+  localStorage.setItem(KEY, p);
+  const f = document.getElementById('progFill');
+  const t = document.getElementById('progPct');
+  if (f) f.style.width = p + '%';
+  if (t) t.textContent = p + '%';
+}
+function getProg() { return parseInt(localStorage.getItem(KEY) || '0', 10); }
+function resetProg() {
+  if (confirm('Fortschritt zurücksetzen?')) {
+    localStorage.removeItem(KEY);
+    setProg(0);
+  }
+}
+setProg(getProg());
+
+// ---------- tabs ----------
+document.querySelectorAll('.tabbtn').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.tabbtn').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  document.getElementById('panel-' + b.dataset.tab).classList.add('active');
+}));
+
+// ---------- helpers ----------
+function shuffle(a) {
+  const arr = a.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+const PREPS = ['an', 'auf', 'aus', 'bei', 'durch', 'für', 'gegen', 'in', 'mit', 'nach', 'über', 'um', 'unter', 'von', 'vor', 'zu'];
+
+// Blank the preposition in a sentence (example preferred, else natural).
+function clozeFor(v) {
+  const re = new RegExp('\\b' + v.prep.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+  for (const c of [{ s: v.example, label: 'Beispiel' }, { s: v.natural, label: 'Natürlicher' }]) {
+    const m = c.s.match(re);
+    if (m) {
+      return {
+        blanked: c.s.slice(0, m.index) + '______' + c.s.slice(m.index + m[0].length),
+        original: c.s,
+        label: c.label,
+        hit: m[0]
+      };
+    }
+  }
+  return null;
+}
+
+// 4 preposition options (1 correct + 3 plausible distractors)
+function prepOptions(correct) {
+  const seen = new Set([correct.toLowerCase()]);
+  const opts = [correct];
+  for (const p of shuffle(PREPS)) {
+    if (!seen.has(p.toLowerCase())) { seen.add(p.toLowerCase()); opts.push(p); }
+    if (opts.length === 4) break;
+  }
+  return shuffle(opts);
+}
+
+// 4 verb+preposition options (1 correct + 3 distractors)
+function verbOptions(correctV) {
+  const seen = new Set([correctV.toLowerCase()]);
+  const opts = [correctV];
+  for (const w of shuffle(VERBS.map(x => x.v))) {
+    const key = w.toLowerCase();
+    if (!seen.has(key)) { seen.add(key); opts.push(w); }
+    if (opts.length === 4) break;
+  }
+  return shuffle(opts);
+}
+
+// ---------- study ----------
+(function () {
+  const list = document.getElementById('studyList');
+  VERBS.forEach((v, i) => {
+    const tags = escHtml(v.grammar).split('·').map(g => `<span class="gramtag">${g.trim()}</span>`).join('');
+    const card = q('div', { className: 'qcard' }, `
+      <div class="reveal" style="margin:0">
+        <div class="g"><span class="speak" data-speak="verb">${escHtml(v.v)}</span>
+          <span class="en">– ${escHtml(v.en)}</span> ${tags}
+          <span style="float:right;color:var(--grey);font-size:.8rem">${i + 1} / ${N}</span>
+        </div>
+        <div style="margin-top:.6rem"><em>${escHtml(v.meaning)}</em></div>
+        <div style="margin-top:.5rem"><b>Beispiel:</b> <span class="speak" data-speak="example">${escHtml(v.example)}</span></div>
+        <div style="margin-top:.35rem;color:var(--grey)"><b>Natürlicher:</b> <span class="speak" data-speak="natural">${escHtml(v.natural)}</span></div>
+      </div>`);
+    card.querySelectorAll('.speak[data-speak]').forEach(sp => {
+      sp.addEventListener('click', e => {
+        e.stopPropagation();
+        const kind = sp.dataset.speak;
+        TTS.speak(kind === 'verb' ? v.v : kind === 'example' ? v.example : v.natural);
+      });
+    });
+    list.appendChild(card);
+  });
+})();
+
+// ---------- drill (flashcards) ----------
+let drillOrder = shuffle([...Array(N).keys()]);
+let drillIdx = 0;
+
+function setDrill() {
+  const v = VERBS[drillOrder[drillIdx]];
+  const card = document.getElementById('flipcard');
+  card.classList.remove('flipped');
+  const verbEl = document.getElementById('drillVerb');
+  verbEl.className = 'verb speak';
+  verbEl.textContent = v.verb;
+  verbEl.onclick = (e) => { e.stopPropagation(); TTS.speak(v.v); };
+  document.getElementById('drillEn').textContent = v.en;
+  document.getElementById('drillPrep').textContent = v.prep + ' + ' + v.case;
+  document.getElementById('drillSent').innerHTML =
+    '<b>' + escHtml(v.v) + '</b> = ' + escHtml(v.en) + '<br><br><b>Beispiel:</b> ' + escHtml(v.example) + '<br><b>Natürlicher:</b> ' + escHtml(v.natural);
+  document.getElementById('drillPos').textContent = (drillIdx + 1) + ' / ' + N;
+  document.getElementById('drillFill').style.width = ((drillIdx + 1) / N * 100) + '%';
+}
+function flip() { document.getElementById('flipcard').classList.toggle('flipped'); }
+function drillNext() {
+  if (drillIdx === N - 1) {
+    drillOrder = shuffle([...Array(N).keys()]);
+    drillIdx = 0;
+  } else {
+    drillIdx++;
+  }
+  setDrill();
+  setProg(getProg() + Math.max(1, Math.round(100 / N)));
+}
+function drillPrev() {
+  if (drillIdx === 0) { setDrill(); return; }
+  drillIdx--;
+  setDrill();
+}
+setDrill();
+
+// =============================================================
+//  LÜCKEN (Welche Präposition passt?)
+// =============================================================
+const ROUND_LEN = 10;
+let fillItems = [], fillIdx = 0, fillScore = 0, fillAnswered = 0;
+
+function fillScoreElt() { return document.getElementById('fillScore'); }
+
+function genFill() {
+  fillItems = shuffle(VERBS.map((v, i) => ({ v, i }))).slice(0, ROUND_LEN);
+  fillIdx = 0; fillScore = 0; fillAnswered = 0;
+  fillShow();
+}
+
+function fillProgress() {
+  document.getElementById('fillPos').textContent = (fillIdx + 1) + ' / ' + ROUND_LEN;
+  document.getElementById('fillFill').style.width = ((fillIdx + 1) / ROUND_LEN * 100) + '%';
+  if (fillScoreElt()) fillScoreElt().textContent = fillScore + ' / ' + fillAnswered + ' richtig';
+}
+
+function fillShow() {
+  fillProgress();
+  const it = fillItems[fillIdx];
+  const v = VERBS[it.i];
+  const cloze = clozeFor(v);
+  const opts = prepOptions(v.prep);
+
+  let inner;
+  if (cloze) {
+    inner = `
+      <p class="qtype">Welche Präposition passt in den Satz? <span class="qtype-tag">${cloze.label}</span></p>
+      <div class="q"><em>„${escHtml(cloze.blanked)}“</em>
+        <span class="speak inline" data-say="${escHtml(cloze.original)}">🔊 anhören</span></div>
+      <div class="opts">${opts.map(o => `<button class="opt" data-ok="${o === v.prep ? '1' : '0'}">${escHtml(o)}</button>`).join('')}</div>`;
+  } else {
+    inner = `
+      <p class="qtype">Welche Präposition gehört zu „${escHtml(v.verb)}“?</p>
+      <div class="q"><em>„${escHtml(v.meaning)}“</em></div>
+      <div class="opts">${opts.map(o => `<button class="opt" data-ok="${o === v.prep ? '1' : '0'}">${escHtml(o)}</button>`).join('')}</div>`;
+  }
+  const box = q('div', { className: 'qcard' }, inner + `<div id="fillFb"></div>`);
+  box.querySelectorAll('.opt').forEach(b => b.addEventListener('click', () => fillPick(b, v)));
+  box.querySelectorAll('.speak[data-say]').forEach(sp => sp.addEventListener('click', e => { e.stopPropagation(); TTS.speak(sp.dataset.say); }));
+  const host = document.getElementById('fillQ');
+  host.innerHTML = '';
+  host.appendChild(box);
+}
+
+function fillPick(btn, v) {
+  if (btn.disabled) return;
+  boxdisabled('#fillQ .opt');
+  const ok = btn.dataset.ok === '1';
+  btn.classList.add(ok ? 'correct' : 'wrong');
+  fillAnswered++;
+  if (ok) fillScore++;
+
+  const cloze = clozeFor(v);
+  const fb = document.getElementById('fillFb');
+  const sol = cloze
+    ? `Die Lösung: <span class="speak" data-sol="${escHtml(cloze.original)}">„${escHtml(cloze.original)}“</span>`
+    : `Die Lösung: <b>${escHtml(v.v)}</b>`;
+
+  fb.innerHTML = (ok
+    ? `<div class="feedback ok">Richtig! 🎉</div>`
+    : `<div class="feedback no">Nicht ganz – <b>${escHtml(v.v)}</b> (${escHtml(v.en)})</div>`)
+    + `<div class="feedback sol">${sol}</div>`;
+
+  fb.querySelectorAll('.speak').forEach(sp => sp.addEventListener('click', e => { e.stopPropagation(); TTS.speak(sp.dataset.sol); }));
+
+  fillProgress();
+  setProg(getProg() + 1);
+
+  const btnWrap = q('div', { className: 'navbtns' },
+    fillIdx < ROUND_LEN - 1
+      ? `<button class="btn">Weiter →</button>`
+      : `<button class="btn">Ergebnis anzeigen 🏁</button>`);
+  btnWrap.querySelector('button').addEventListener('click', () => {
+    if (fillIdx < ROUND_LEN - 1) { fillIdx++; fillShow(); }
+    else fillResult();
+  });
+  fb.appendChild(btnWrap);
+}
+
+function fillResult() {
+  const host = document.getElementById('fillQ');
+  host.innerHTML = '';
+  const card = q('div', { className: 'qcard results' }, `
+    <h3>🏁 Runde geschafft</h3>
+    <p class="bigscore">Du hast <b>${fillScore}</b> von <b>${ROUND_LEN}</b> Sätzen richtig ergänzt.</p>
+    <div class="navbtns">
+      <button class="btn" id="fillAgain">Nochmal spielen</button>
+      <button class="btn ghost" onclick="document.querySelector('[data-tab=drill]').click()">Zu den Karten</button>
+    </div>`);
+  card.querySelector('#fillAgain').addEventListener('click', genFill);
+  host.appendChild(card);
+  fillProgress();
+}
+function boxdisabled(sel) { [...document.querySelectorAll(sel)].forEach(o => o.disabled = true); }
+function fillReset() { genFill(); }
+genFill();
+
+// =============================================================
+//  QUIZ
+// =============================================================
+let quizItems = [], quizIdx = 0, quizScore = 0, quizAnswered = 0;
+
+function quizScoreElt() { return document.getElementById('quizScore'); }
+
+function genQuiz() {
+  quizItems = shuffle(VERBS.map((v, i) => ({ v, i }))).slice(0, ROUND_LEN);
+  quizIdx = 0; quizScore = 0; quizAnswered = 0;
+  quizShow();
+}
+
+function quizProgress() {
+  document.getElementById('quizPos').textContent = (quizIdx + 1) + ' / ' + ROUND_LEN;
+  document.getElementById('quizFill').style.width = ((quizIdx + 1) / ROUND_LEN * 100) + '%';
+  if (quizScoreElt()) quizScoreElt().textContent = quizScore + ' / ' + quizAnswered + ' richtig';
+}
+
+function quizShow() {
+  quizProgress();
+  const it = quizItems[quizIdx];
+  const v = VERBS[it.i];
+
+  // fixed per item -> predictable and balanced
+  const tpl = (it.i * 7 + quizIdx) % 4;
+  const pool = shuffle(VERBS.filter(x => x.i !== it.i));
+
+  let badge, qhtml, opts, correct;
+
+  if (tpl === 0) {            // Welche Präposition?
+    badge = 'Präposition';
+    correct = v.prep;
+    const cloze = clozeFor(v);
+    if (cloze) {
+      qhtml = `Welche Präposition passt in den Satz? <span class="speak inline" data-say="${escHtml(cloze.original)}">🔊 anhören</span>
+        <div class="q" style="margin-top:.6rem"><em>„${escHtml(cloze.blanked)}“</em></div>`;
+    } else {
+      qhtml = `Welche Präposition gehört zu „<b>${escHtml(v.verb)}</b>“? <em>${escHtml(v.meaning)}</em>`;
+    }
+    opts = prepOptions(v.prep);
+  } else if (tpl === 1) {     // Akkusativ oder Dativ?
+    badge = 'Kasus';
+    correct = v.case;
+    qhtml = `Welchen Fall verlangt „<b>${escHtml(v.v)}</b>“?`;
+    opts = ['Akkusativ', 'Dativ'];
+  } else if (tpl === 2) {     // Deutsch -> Englisch
+    badge = 'Deutsch → Englisch';
+    correct = v.en;
+    qhtml = `Was bedeutet „<b>${escHtml(v.v)}</b>“? <span class="speak inline" data-say="${escHtml(v.v)}">🔊 anhören</span>`;
+    const seen = new Set([v.en]); const o = [v.en];
+    for (const d of pool) { if (!seen.has(d.en.toLowerCase())) { seen.add(d.en.toLowerCase()); o.push(d.en); } if (o.length === 4) break; }
+    opts = shuffle(o);
+  } else {                    // Englisch -> Deutsch
+    badge = 'Englisch → Deutsch';
+    correct = v.v;
+    qhtml = `Wie heißt „<b>${escHtml(v.en)}</b>“ auf Deutsch?`;
+    opts = verbOptions(v.v);
+  }
+
+  const box = q('div', { className: 'qcard' }, `
+    <p class="qtype"><span class="qtype-tag">${badge}</span></p>
+    <div class="q">${qhtml}</div>
+    <div class="opts">${opts.map(o => `<button class="opt" data-ok="${String(o) === String(correct) ? '1' : '0'}">${escHtml(o)}</button>`).join('')}</div>
+    <div id="quizFb"></div>`);
+  box.querySelectorAll('.opt').forEach(b => b.addEventListener('click', () => quizPick(b, String(correct), v)));
+  box.querySelectorAll('.speak[data-say]').forEach(sp => sp.addEventListener('click', e => { e.stopPropagation(); TTS.speak(sp.dataset.say); }));
+  const host = document.getElementById('quizQ');
+  host.innerHTML = '';
+  host.appendChild(box);
+}
+
+function quizPick(btn, correct, v) {
+  if (btn.disabled) return;
+  boxdisabled('#quizQ .opt');
+  const ok = btn.dataset.ok === '1';
+  btn.classList.add(ok ? 'correct' : 'wrong');
+  quizAnswered++;
+  if (ok) quizScore++;
+
+  const fb = document.getElementById('quizFb');
+  let extra = '';
+  if (!ok) extra = `<div class="feedback sol">Antwort: <b>${escHtml(correct)}</b> · ${escHtml(v.v)} (${escHtml(v.prep)} + ${escHtml(v.case)})</div>`;
+  fb.innerHTML = (ok
+    ? `<div class="feedback ok">Richtig! 🎉</div>`
+    : `<div class="feedback no">Leider falsch.</div>`)
+    + extra;
+
+  quizProgress();
+  setProg(getProg() + 1);
+
+  const btnWrap = q('div', { className: 'navbtns' },
+    quizIdx < ROUND_LEN - 1
+      ? `<button class="btn">Weiter →</button>`
+      : `<button class="btn">Ergebnis anzeigen 🏁</button>`);
+  btnWrap.querySelector('button').addEventListener('click', () => {
+    if (quizIdx < ROUND_LEN - 1) { quizIdx++; quizShow(); }
+    else quizResult();
+  });
+  fb.appendChild(btnWrap);
+}
+
+function quizResult() {
+  const host = document.getElementById('quizQ');
+  host.innerHTML = '';
+  const card = q('div', { className: 'qcard results' }, `
+    <h3>🏁 Quiz geschafft</h3>
+    <p class="bigscore">Du hast <b>${quizScore}</b> von <b>${ROUND_LEN}</b> Fragen richtig beantwortet.</p>
+    <div class="navbtns">
+      <button class="btn" id="quizAgain">Nochmal spielen</button>
+      <button class="btn ghost" onclick="document.querySelector('[data-tab=drill]').click()">Zu den Karten</button>
+    </div>`);
+  card.querySelector('#quizAgain').addEventListener('click', genQuiz);
+  host.appendChild(card);
+  quizProgress();
+}
+function quizReset() { genQuiz(); }
+genQuiz();
+
+</script>
+</body>
+</html>
